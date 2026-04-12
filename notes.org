@@ -1,0 +1,53 @@
+* Tipizzazione statica vs dinamica
+
+** Tipizzazione statica
+Il tipo delle variabili e espressioni è conosciuto a
+compile-time.
+
+** Tipizzazione dinamica
+Se a tempo di esecuzione il tipo associato a ciascuna
+variabile/espressione è noto quando viene valutato.
+
+*C usa una tipizzazione statica*
+
+
+** Type-safe
+Una programming language è *type-safe* se le uniche operazioni
+che possono essere eseguite sui dati sono quelle autorizzate
+dal tipo di dato.
+Qualunque tentativo di usare un valore in modo errato rispetto
+al suo tipo è garatito di causare un errore (Sia a tempo di
+compilazione che a tempo di esecuzione).
+
+*C non è type-safe*
+
+
+** Type-sound
+Una programming language tipizzata staticamente é *type-sound*
+se /"Well-typed program can't go wrong"/.
+L'espressione /"going wrong"/ si riferisce tradizionalmente al raggiungimento
+dello stato in cui l'esecuzione non può procedere o si verifica una indefinita
+e invalida operazione.
+
+Type-soundness implica type-safety. 
+
+*C non è type-sound*
+
+
+* Principio del Privilegio Minimo
+Nel contesto di un'applicazione, al codice deve essere garantita solo la
+quantità di privilegi necessaria per eseguire il compito per cui è stato progettato,
+non di più.
+
+** Il quantificatore /const/
+Informa il compilatore che una variabile non deve essere modificata.
+Supporta il privilegio minimo riducendo i tempi di debug e previene effetti collaterali
+indesiderati.
+
+In C ci sono 4 modi per specificare i privilegi di accesso quando si passa un puntatore a
+una funzione:
+
+- puntatore non costante a dati non costanti. es. char* ptrStr.
+- puntatore costante a dati non costanti.     es. char* const ptrStr.
+- puntatore non costante a dati constanti.    es. const char* ptrStr.
+- puntatore costante a dati costanti.         es. const char* const ptrStr.
