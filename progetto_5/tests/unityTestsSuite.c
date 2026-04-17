@@ -326,7 +326,7 @@ void sset_size_PassingNULLPointer(void)
 {
     IntSortedSetADT s = NULL;
     int ret = sset_size(s);
-    TEST_ASSERT_EQUAL_INT(0, ret);
+    TEST_ASSERT_EQUAL_INT(-1, ret);
 }
 
 void sset_size_EmptySet(void)
@@ -936,6 +936,17 @@ void sset_max_PopulatedSetBigMax(void)
     TEST_ASSERT_EQUAL_INT(1231, ptr);
 }
 
+/* sset_extractMax tests */
+
+void sset_extractMax_testUni(void)
+{
+    IntSortedSetADT s = mkSSetv(2, 3, 5);
+    int ptr;
+    _Bool ret = sset_extractMax(s, &ptr);
+    TEST_ASSERT_EQUAL_INT(1, ret);
+    TEST_ASSERT_EQUAL_INT(5, ptr);
+}
+
 
 int main(void)
 {
@@ -1015,7 +1026,8 @@ int main(void)
     RUN_TEST(sset_max_passingNULLPointers);
     RUN_TEST(sset_max_passingEmptySet);
     RUN_TEST(sset_max_PopulatedSet);
-    RUN_TEST(sset_max_PopulatedSetBigMax);    
+    RUN_TEST(sset_max_PopulatedSetBigMax);
+    RUN_TEST(sset_extractMax_testUni);
     UNITY_END();
     return 0;
 }

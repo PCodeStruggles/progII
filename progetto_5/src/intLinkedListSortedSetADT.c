@@ -80,7 +80,9 @@ _Bool sset_remove(const IntSortedSetADT ss, const int elem)
             } else {
                 ss->first = currentNode->next;
             }
-            currentNode = currentNode->next;
+            if (currentNode->next == NULL) {
+                ss->last = prevNode;
+            }
             free(tmp);
             ss->size -= 1;
             return 1;
@@ -108,14 +110,23 @@ _Bool isEmptySSet(const IntSortedSetADT ss)
 
 int sset_size(const IntSortedSetADT ss)
 {
-    if (ss == NULL) return 0;
+    if (ss == NULL) return -1;
     return ss->size;
 }
 
 // TODO To be implemented
+// toglie e restituisce un elemento a caso dall'insieme, restituisce false se l'insieme è NULL oppure è vuoto
 _Bool sset_extract(IntSortedSetADT ss, int *ptr)
 {
-    return false;
+    if(ss == NULL || ptr == NULL) return 0;
+    if(ss->first) {
+        *ptr = ss->first->elem;
+        ListNodePtr tmp = ss->first;
+        ss->first = ss->first->next;
+        ss->size -= 1;
+        free(tmp);
+        return 1;
+    } else return 0;
 }
 
 _Bool sset_equals(const IntSortedSetADT s1, const IntSortedSetADT s2)
