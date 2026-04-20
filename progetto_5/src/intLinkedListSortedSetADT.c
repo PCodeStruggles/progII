@@ -114,8 +114,6 @@ int sset_size(const IntSortedSetADT ss)
     return ss->size;
 }
 
-// TODO To be implemented
-// toglie e restituisce un elemento a caso dall'insieme, restituisce false se l'insieme è NULL oppure è vuoto
 _Bool sset_extract(IntSortedSetADT ss, int *ptr)
 {
     if(ss == NULL || ptr == NULL) return 0;
