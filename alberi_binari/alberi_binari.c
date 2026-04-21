@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct intTreeNode IntTreeNode, *intTree;
 
@@ -9,6 +10,9 @@ struct intTreeNode {
     intTree right;
 };
 
+/* Visita il sotto alberosinistro, 
+ * la radice e poi il sottoalbero destro 
+ */
 void inOrder(intTree Tree)
 {
     if(Tree == NULL) return;
@@ -21,6 +25,7 @@ void inOrder(intTree Tree)
     inOrder(Tree->right);
 }
 
+/* Visita la radice, il sottoalbero sinistro e poi il sottoalbero destro */
 void preOrder(intTree Tree)
 {
     if(Tree == NULL) return;
@@ -32,6 +37,7 @@ void preOrder(intTree Tree)
     preOrder(Tree->right);
 }
 
+/* Visita il sottoalbero sinistro, quello destro e poi la radice */
 void postOrder(intTree Tree)
 {
     if(Tree == NULL) return;
@@ -61,6 +67,20 @@ size_t height(intTree Tree)
     } else if(Tree->right != NULL) {
         res = 1 + height(Tree->right);
     }
+    return res;
+}
+
+bool greaterThanZero(int a) { return a > 0; }
+
+bool greaterThan10(int a) { return a > 10; }
+
+size_t count(intTree Tree, bool (*predicate)(int elem))
+{
+    if(Tree == NULL) return 0;
+    size_t res = 0;
+    res += count(Tree->left, predicate);
+    if((*predicate)(Tree->data)) res += 1;
+    res += count(Tree->right, predicate);
     return res;
 }
 
@@ -100,4 +120,6 @@ int main(void)
 
     printf("Tree size: %zu\n", size(root));
     printf("Tree height: %zu\n", height(root));
+    printf("Num of elem greater than 0:  %zu\n", count(root, greaterThanZero));
+    printf("Num of elem greater than 10: %zu\n", count(root, greaterThan10));
 }
