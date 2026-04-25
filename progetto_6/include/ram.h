@@ -5,17 +5,37 @@ typedef enum risultato {OK, NOK} Risultato;
 typedef struct nodo *RAM;           
 typedef enum stato {INTERNO, LIBERO, OCCUPATO} Stato;
 struct nodo {
-    int KB;    // la quantità di memoria contenuta nel nodo 
-    Stato s;    // stato del nodo: interno, libero, occupato
-    RAM parent; // la struttura padre
+    int KB;             // la quantità di memoria contenuta nel nodo 
+    Stato s;            // stato del nodo: interno, libero, occupato
+    RAM parent;         // la struttura padre
     RAM lbuddy, rbuddy; // i successori, avranno dimensione KB/2
 };
 
+/* Tree visualization utilities */
+
 /**
-* @brief Stampa l'albero in pre-order
-* @param r puntatore alla radice dell'albero
+* @brief Helper function di dumpRam che raccoglie e formatta le informazioni
+* di ogni nodo in formato compabitibile con GraphViz online
+* @param r root dell'albero da visualizzare
+* @return void
 */
-void printRam(RAM r);
+void dumpRamNodesInfo(FILE* f, RAM r);
+
+/**
+* @brief Helper function di dumpRam che raccoglie e formatta la topologia
+* dell'albero in formato compatibile con GraphViz online
+* @param r root dell'albero da visualizzare
+* @return void
+*/
+void buildNodeConnections(FILE* f, RAM r);
+
+/**
+* @brief Crea un file in output con descrizione dell'albero in formato
+* compatibile con GraphViz online per visualizzazione grafica dell'albero
+* @param r root dell'albero da visualizzare
+* @return void
+*/
+void dumpRam(const char* filePath, RAM r);
 
 /**
 * @brief Crea una struttura RAM con una certa quantità di memoria  

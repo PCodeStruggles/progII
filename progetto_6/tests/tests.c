@@ -66,16 +66,12 @@ void allocram_OneNodeAllocatedAndTryingToAllocateRightSibling(void)
     TEST_ASSERT_NULL_MESSAGE(r->parent, "r->parent not null");
     TEST_ASSERT_NULL_MESSAGE(r->lbuddy, "r->lbuddy not null");
     TEST_ASSERT_NULL_MESSAGE(r->rbuddy, "r->rbuddy not null");
-    printf("Tree:\n");
-    printRam(r);
     RAM n = allocram(4, r);
     TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
     TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
     n = allocram(4, r);
     TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
     TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
-    printf("Tree after alloc:\n");
-    printRam(r);
 }
 
 void allocram_noSpaceAvailable(void)
@@ -88,18 +84,104 @@ void allocram_noSpaceAvailable(void)
     TEST_ASSERT_NULL_MESSAGE(r->parent, "r->parent not null");
     TEST_ASSERT_NULL_MESSAGE(r->lbuddy, "r->lbuddy not null");
     TEST_ASSERT_NULL_MESSAGE(r->rbuddy, "r->rbuddy not null");
-    printf("Tree:\n");
-    printRam(r);
     RAM n = allocram(4, r);
     TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
     TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
     n = allocram(4, r);
     TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
     TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
-    printf("Tree after alloc:\n");
-    printRam(r);
     n = allocram(4, r);
     TEST_ASSERT_NULL(n);
+}
+
+void allocram_multiplesAllocations(void)
+{
+    int size = 8;
+    RAM r = initram(size);
+    TEST_ASSERT_NOT_NULL_MESSAGE(r, "r null");
+    TEST_ASSERT_EQUAL_INT(size, r->KB);
+    TEST_ASSERT_EQUAL_INT(LIBERO, r->s);
+    TEST_ASSERT_NULL_MESSAGE(r->parent, "r->parent not null");
+    TEST_ASSERT_NULL_MESSAGE(r->lbuddy, "r->lbuddy not null");
+    TEST_ASSERT_NULL_MESSAGE(r->rbuddy, "r->rbuddy not null");
+    RAM n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(4, r);
+    TEST_ASSERT_NULL(n);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+}
+
+void allocram_bigAlloc(void)
+{
+    int size = 16;
+    RAM r = initram(size);
+    TEST_ASSERT_NOT_NULL_MESSAGE(r, "r null");
+    TEST_ASSERT_EQUAL_INT(size, r->KB);
+    TEST_ASSERT_EQUAL_INT(LIBERO, r->s);
+    TEST_ASSERT_NULL_MESSAGE(r->parent, "r->parent not null");
+    TEST_ASSERT_NULL_MESSAGE(r->lbuddy, "r->lbuddy not null");
+    TEST_ASSERT_NULL_MESSAGE(r->rbuddy, "r->rbuddy not null");
+    RAM n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(4, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(8, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(8, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(2, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    n = allocram(16, r);
+    TEST_ASSERT_NOT_NULL_MESSAGE(n, "n null");
+    TEST_ASSERT_EQUAL_INT(OCCUPATO, n->s);
+    dumpRam("output_bigalloc.txt", r);
 }
 
 void allocram_allocationTakesWholeRam(void)
@@ -141,6 +223,8 @@ int main(void)
     RUN_TEST(allocram_noSpaceAvailable);
     RUN_TEST(allocram_allocationTakesWholeRam);
     RUN_TEST(allocram_allocationOfNegativeK);
+    RUN_TEST(allocram_multiplesAllocations);
+    RUN_TEST(allocram_bigAlloc);
     UNITY_END();
     return 0;
 }

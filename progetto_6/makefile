@@ -15,5 +15,5 @@ run:
 
 clean:
 	rm ./tests/tests
+	rm ./*.txt
 	rm ./bin/ram.o
-

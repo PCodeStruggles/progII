@@ -3,31 +3,47 @@
 
 #include "../include/ram.h"
 
-
-/* Debug functions */
-
-/**
-* @brief Stampa l'albero in pre-order
-* @param r puntatore alla radice dell'albero
-*/
-void printRam(RAM r)
+void dumpRamNodesInfo(FILE* f, RAM r)
 {
     if(r == NULL) return;
-
-    printf("Nodo: %p\n", r);
-    printf("    size   : %d\n", r->KB);
-    printf("    s      : %d\n", r->s);
-    printf("    parent : %p\n", r->parent);
-    printf("    lbuddy : %p\n", r->lbuddy);
-    printf("    rbuddy : %p\n", r->rbuddy);
-    printRam(r->lbuddy);
-    printRam(r->rbuddy);
+    fprintf(f,"\t\"%p\" [label=\"{ Addr: %p | Size: %d | Status: %s }\"];\n",
+            r, 
+            r, 
+            r->KB, 
+            (r->s == 1) ? "LIBERO" : "OCCUPATO");
+    dumpRamNodesInfo(f, r->lbuddy);
+    dumpRamNodesInfo(f, r->rbuddy);
 }
 
+void buildNodeConnections(FILE* f, RAM r)
+{
+    if(r->lbuddy) {
+        fprintf(f, "\t\"%p\" -> \"%p\";\n", r, r->lbuddy);
+        buildNodeConnections(f, r->lbuddy);
+    }
+    if(r->rbuddy) {
+        fprintf(f, "\t\"%p\" -> \"%p\";\n", r, r->rbuddy);
+        buildNodeConnections(f, r->rbuddy);
+    }
+}
+
+void dumpRam(const char* filePath, RAM r)
+{
+    if(r == NULL) return;
+    FILE* f;
+    f = fopen(filePath, "w");
+    fprintf(f, "digraph G {\n\tnode [shape=record];\n");
+    dumpRamNodesInfo(f, r);
+    fprintf(f, "\n");
+    buildNodeConnections(f, r);
+    fprintf(f, "}");
+    fclose(f);
+}
 
 /**
 * @brief Crea una struttura RAM con una certa quantità di memoria
-* @param M la quantità di memoria voluta, espressa in KB (deve essere una potenza di 2, maggiore o uguale a 1)
+* @param M la quantità di memoria voluta, espressa in KB 
+*  (deve essere una potenza di 2, maggiore o uguale a 1)
 * @return Il puntatore alla struttura creata, oppure NULL in caso di errore
 */
 RAM initram(int M)
@@ -51,7 +67,8 @@ RAM initram(int M)
 * @brief Tenta di allocare una data quantità di memoria entro una RAM
 * @param K la quantità di memoria richiesta, in KB
 * @param ram la RAM entro cui cercare la memoria richiesta
-* @return Il puntatore al nodo che può ospitare la quantità richiesta, oppure NULL se non trovato
+* @return Il puntatore al nodo che può ospitare la quantità richiesta, 
+*  oppure NULL se non trovato
 */
 RAM allocram(int K, RAM ram)
 {
