@@ -73,6 +73,15 @@ Risultato deallocram(RAM ram);
 int numfree(RAM ram);
 
 /**
+ * @brief funzione ausiliaria di ram2str che accetta come argomento un buffer in
+ * cui viene costruita la stringa che ram2str restituisce in output.
+ * @param ram la struttura RAM di cui creare la stringa.
+ * @param ramstr puntatore a puntatore a buffer char in cui viene costruita la
+ * stringa.
+ */
+void ram2strBuilder(RAM ram, char **ramstr);
+
+/**
  * @brief crea una rappresentazione dello stato interno della RAM sotto forma di
  * una stringa (in un formato a piacere, purchè completo di tutte le
  * informazioni, ovvero tale che si possa ricreare dalla stringa esattamente lo
