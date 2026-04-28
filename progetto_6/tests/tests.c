@@ -454,11 +454,24 @@ void ram2str_passingNULL(void)
 
 /* str2ram tests */
 
-void str2ram_testing(void)
+void str2ram_case1(void)
 {
     char* strTree = "16 iio##o##io##o##";
     RAM r = str2ram(strTree);
-    dumpRam("str2ram.txt", r);
+}
+
+void str2ram_case2(void)
+{
+    char* strTree = "16 if##f##";
+    RAM r = str2ram(strTree);
+    dumpRam("str2ram2.txt", r);
+}
+
+void str2ram_case3(void)
+{
+    char* strTree = "#";
+    RAM r = NULL;
+    TEST_ASSERT_NULL(r);
 }
 
 int main(void)
@@ -490,7 +503,9 @@ int main(void)
     RUN_TEST(ram2str_rootAllocatedWith2EmptyChildren);
     RUN_TEST(ram2str_bigAlloc);
     RUN_TEST(ram2str_passingNULL);
-    RUN_TEST(str2ram_testing);
+    RUN_TEST(str2ram_case1);
+    RUN_TEST(str2ram_case2);
+    RUN_TEST(str2ram_case3);
     UNITY_END();
     return 0;
 }
