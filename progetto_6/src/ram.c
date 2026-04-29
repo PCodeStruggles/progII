@@ -138,13 +138,17 @@ RAM allocram(int K, RAM ram)
 
 Risultato deallocram(RAM ram)
 {
-    if (ram == NULL || ram->s != OCCUPATO) {
+    if (ram == NULL) {
         return NOK;
     }
 
     if(ram->parent == NULL) {
-        ram->s = LIBERO;
-        return OK;
+        if(ram->s == OCCUPATO) {
+            ram->s = LIBERO;
+            return OK;
+        } else {
+            return NOK;
+        }
     }
 
     ram->s = LIBERO;
@@ -152,18 +156,15 @@ Risultato deallocram(RAM ram)
     RAM buddy = (ram == ram->parent->lbuddy) ? ram->parent->rbuddy : ram->parent->lbuddy;
 
     if(buddy->s == LIBERO) {
-
-    RAM p = ram->parent;
-    p->s = LIBERO;
-
-    free(p->lbuddy);
-    p->lbuddy = NULL;
-
-    free(p->rbuddy);
-    p->rbuddy = NULL;
-    p->s = OCCUPATO;
-    deallocram(p);
+        RAM p = ram->parent;
+        p->s = LIBERO;
+        free(p->lbuddy);
+        p->lbuddy = NULL;
+        free(p->rbuddy);
+        p->rbuddy = NULL;
+        deallocram(p);
     }
+
     return OK;
 }
 
