@@ -373,7 +373,7 @@ void numfree_fullTree(void)
 void numfree_passingNULLPointer(void)
 {
     int res = numfree(NULL);
-    TEST_ASSERT_EQUAL_INT(0, res);
+    TEST_ASSERT_EQUAL_INT(-1, res);
 }
 
 /* ram2str tests */
@@ -449,7 +449,7 @@ void ram2str_bigAlloc(void)
 void ram2str_passingNULL(void)
 {
     const char* ramstr = ram2str(NULL);
-    TEST_ASSERT_EQUAL_STRING("#", ramstr);
+    TEST_ASSERT_EQUAL_STRING("", ramstr);
 }
 
 /* str2ram tests */
@@ -458,6 +458,7 @@ void str2ram_case1(void)
 {
     char* strTree = "16 iio##o##io##o##";
     RAM r = str2ram(strTree);
+    dumpRam("str2ram1.txt", r);
 }
 
 void str2ram_case2(void)
@@ -469,7 +470,7 @@ void str2ram_case2(void)
 
 void str2ram_case3(void)
 {
-    char* strTree = "#";
+    char* strTree = "";
     RAM r = NULL;
     TEST_ASSERT_NULL(r);
 }

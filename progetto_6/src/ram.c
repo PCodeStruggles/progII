@@ -215,12 +215,14 @@ void ram2strBuilder(RAM ram, char **ramstr)
 char *ram2str(RAM ram)
 {
     char *ramstr = (char *)malloc(RAMSTR_MAX_LEN);
-    if (ramstr == NULL)
-        return NULL;
+    if (ramstr == NULL) return "";
+    memset(ramstr, 0, RAMSTR_MAX_LEN);
     char *strstart = ramstr;
     if (ram) {
         int n = sprintf(ramstr, "%d ", ram->KB);
         ramstr += n;
+    } else {
+        return strstart;
     }
     ram2strBuilder(ram, &ramstr);
     *ramstr = '\0';
@@ -263,8 +265,8 @@ RAM str2RamBuilder(char **strTreeInfo, long int rootSize)
 
 RAM str2ram(char *str)
 {
-    if (str == NULL)
-        return NULL;
+    if (str == NULL) return NULL;
+    if(strcmp(str, "") == 0) return NULL;
     long int rootSize = strtol(str, NULL, 10);
     if (rootSize == LONG_MIN || rootSize == LONG_MAX)
         return NULL;
