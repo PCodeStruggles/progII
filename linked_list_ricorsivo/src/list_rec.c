@@ -37,7 +37,8 @@ ListNodePtr mkListv(int count, ...)
     return l;
 }
 
-// Ritorna una lista contenente tutti i numeri interi compresi tra @m ed @n, estremi inclusi.
+// Ritorna una lista contenente tutti i numeri interi
+// compresi tra @m ed @n, estremi inclusi.
 ListNodePtr fromTo_rec(int m, int n)
 {
     if(m > n) return NULL;
@@ -106,14 +107,16 @@ ListNodePtr reverse_rec_(ListNodePtr ls, ListNodePtr l)
     return reverse_rec_(ls->next, newNode);
 }
 
-// Ritorna una nuova lista con gli elementi di @ls in ordine inverso (non modifica la lista @ls).
+// Ritorna una nuova lista con gli elementi
+// di @ls in ordine inverso (non modifica la lista @ls).
 ListNodePtr reverse_rec(ListNodePtr ls)
 {
     if(ls == NULL) return NULL;
     return reverse_rec_(ls, NULL);
 }
 
-// Ritorna la lista i cui elementi sono le somme a coppie degli elementi corrispondenti di due liste @ls1 e @ls2
+// Ritorna la lista i cui elementi sono le somme a
+// coppie degli elementi corrispondenti di due liste @ls1 e @ls2
 // di uguale lunghezza (non modifica la liste @ls1 e @ls2).
 ListNodePtr zipSum_rec(ListNodePtr ls1, ListNodePtr ls2)
 {
@@ -191,7 +194,8 @@ void remove_all_rec(ListNodePtr *p_ls, int x)
     }
 }
 
-// Duplica tutti i nodi della lista @ls che contengono un numero pari (modifica @ls).
+// Duplica tutti i nodi della lista @ls
+// che contengono un numero pari (modifica @ls).
 void duplicate_even_rec(ListNodePtr ls)
 {
     if(ls == NULL) {
